@@ -6,11 +6,14 @@
             RubeCube
         </title>
 
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-        <link rel="stylesheet" src="css/app.css"
+        <link rel="stylesheet" href="css/app.css">
 
     </head>
 
@@ -22,18 +25,56 @@
             </div>
         </nav>
 
-        <div class="row">
-          <div class="col ">
-            <div class="card-panel">
+<div class="row">
+    <div class="col ">
+        <div class="card-panel">
 
-                <table>
-                </table>
+            <div class="cube-rep">
+
+                <div class="panel">
+                    <div class="cube-side invSide">
+                    </div>
+
+                    <div class="cube-side" id="side5">
+                    </div>
+
+                    <div class="cube-side invSide">
+                    </div>
+                    <div class="cube-side invSide">
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="cube-side" id="side1">
+                    </div>
+                    <div class="cube-side" id="side2">
+                    </div>
+                    <div class="cube-side" id="side3">
+                    </div>
+                    <div class="cube-side" id="side4">
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="cube-side invSide">
+                    </div>
+
+                    <div class="cube-side" id="side6">
+                    </div>
+
+                    <div class="cube-side invSide">
+                    </div>
+                    <div class="cube-side invSide">
+                    </div>
+                </div>
 
             </div>
-          </div>
+
         </div>
+    </div>
+</div>
 
-
+        <script type="text/javascript" src="js/cube.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>

@@ -1,4 +1,5 @@
 //  Init cube
+var invSide = [[-1,-1,-1],[-1,-1,-1],[-1,-1,-1]];
 var side1 = [[0,0,0],[0,0,0],[0,0,0]];
 var side2 = [[1,1,1],[1,1,1],[1,1,1]];
 var side3 = [[2,2,2],[2,2,2],[2,2,2]];
@@ -19,9 +20,85 @@ var rotateFace = function( side ){
     }
 }
 
-var moveU = function( cube, side ){
+var setColor = function( obj, color ){
+    switch( color ){
+        case 0: obj.style.backgroundColor = "#d50000"; // red;
+                break;
+        case 1: obj.style.backgroundColor = "#2962ff"; // blue;
+                break;
+        case 2: obj.style.backgroundColor = "#00c853"; // green;
+                break;
+        case 3: obj.style.backgroundColor = "#fafafa"; // grey;
+                break;
+        case 4: obj.style.backgroundColor = "#ff6d00"; // orange;
+                break;
+        case 5: obj.style.backgroundColor = "#ffd600"; // yellow;
+                break;
+        default:
+                break;
+    }
+}
+
+var printSide = function( side, sideObj ){
+    //  Clear side
+    while( sideObj.firstChild ){
+        sideObj.removeChild( sideObj.firstChild );
+    }
+    //  Create three rows
+    for( i = 0; i < 3; i++ ){
+        var cubeRow = document.createElement( "div" );
+        cubeRow.className = "cube-row";
+        //  Create three blocks
+        for( j = 0; j < 3; j++ ){
+            var cubeBlock = document.createElement( "div" );
+            cubeBlock.className = "cube-block";
+            //  Set block color
+            setColor( cubeBlock, side[i][j] );
+            //  Append block
+            cubeRow.appendChild( cubeBlock );
+        }
+        //  Append row
+        sideObj.appendChild( cubeRow );
+    }
+}
+
+var initCube = function(){
+    //  Populate invalid sides
+    var invSides = document.getElementsByClassName( "invSide" );
+    for( itr = 0; itr < invSides.length; itr++ ){
+        printSide( invSide, invSides[itr] );
+    }
+
+    //  Populate sides
+    for( itr = 0; itr < 6; itr++ ){
+        //  Get cube side html object
+        var sideObj = document.getElementById( "side" + (itr + 1) );
+        printSide( cube[itr], sideObj );
+    }
+}
+
+var refreshCube = function(){
+    //  Populate sides
+    for( itr = 0; itr < 6; itr++ ){
+        //  Get cube side html object
+        var sideObj = document.getElementById( "side" + (itr + 1) );
+        printSide( cube[itr], sideObj );
+    }
+}
+
+console.log( cube );
+initCube();
+
+//  ------------- CUBE MOVES -------------
+
+//  UP
+var moveU = function( side ){
+
     switch( side ){
         case 1:
+        case 2:
+        case 3:
+        case 4:
             temp = side1[0];
             side1[0] = side2[0];
             side2[0] = side3[0];
@@ -29,11 +106,20 @@ var moveU = function( cube, side ){
             side4[0] = temp;
             rotateFace( side5 );
             break;
-        case 2: break;
-        case 3: break;
-        case 4: break;
-        case 5: break;
-        case 6: break;
+        case 5:
+        case 6:
+            temp = side5[2];
+            side5[2] = [side1[2][2],side1[1][2], side1[0][2]];
+            side1[0][2] = side6[0][0];
+            side1[1][2] = side6[0][1];
+            side1[2][2] = side6[0][2];
+            side6[0] = [side3[2][0], side3[1][0], side3[0][0]];
+            side3[0][0] = temp[0];
+            side3[1][0] = temp[1];
+            side3[2][0] = temp[2];
+            rotateFace( side2 );
+            break;
 
     }
+    refreshCube();
 }
