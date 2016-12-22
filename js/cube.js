@@ -40,8 +40,11 @@ var setColor = function( obj, color ){
 }
 
 var printSide = function( side, sideObj ){
+    //  Clear side
+    while( sideObj.firstChild ){
+        sideObj.removeChild( sideObj.firstChild );
+    }
     //  Create three rows
-    console.log( "Printing cube" );
     for( i = 0; i < 3; i++ ){
         var cubeRow = document.createElement( "div" );
         cubeRow.className = "cube-row";
@@ -63,14 +66,21 @@ var initCube = function(){
     //  Populate invalid sides
     var invSides = document.getElementsByClassName( "invSide" );
     for( itr = 0; itr < invSides.length; itr++ ){
-        console.log( itr );
         printSide( invSide, invSides[itr] );
     }
 
     //  Populate sides
     for( itr = 0; itr < 6; itr++ ){
         //  Get cube side html object
-        console.log( "side" + (itr + 1) );
+        var sideObj = document.getElementById( "side" + (itr + 1) );
+        printSide( cube[itr], sideObj );
+    }
+}
+
+var refreshCube = function(){
+    //  Populate sides
+    for( itr = 0; itr < 6; itr++ ){
+        //  Get cube side html object
         var sideObj = document.getElementById( "side" + (itr + 1) );
         printSide( cube[itr], sideObj );
     }
@@ -79,7 +89,10 @@ var initCube = function(){
 console.log( cube );
 initCube();
 
-var moveU = function( cube, side ){
+//  ------------- CUBE MOVES -------------
+
+//  UP
+var moveU = function( side ){
 
     switch( side ){
         case 1:
@@ -92,8 +105,21 @@ var moveU = function( cube, side ){
             side3[0] = side4[0];
             side4[0] = temp;
             rotateFace( side5 );
-        case 5: break;
-        case 6: break;
+            break;
+        case 5:
+        case 6:
+            temp = side5[2];
+            side5[2] = [side1[2][2],side1[1][2], side1[0][2]];
+            side1[0][2] = side6[0][0];
+            side1[1][2] = side6[0][1];
+            side1[2][2] = side6[0][2];
+            side6[0] = [side3[2][0], side3[1][0], side3[0][0]];
+            side3[0][0] = temp[0];
+            side3[1][0] = temp[1];
+            side3[2][0] = temp[2];
+            rotateFace( side2 );
+            break;
 
     }
+    refreshCube();
 }
