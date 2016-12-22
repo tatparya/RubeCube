@@ -19,19 +19,25 @@ var rotateFace = function( side ){
     }
 }
 
+var printSide = function( side, sideObj ){
+    var sideDiv = document.createElement( "div" );
+}
+
+console.log( cube );
+
 var moveU = function( cube, side ){
+
     switch( side ){
         case 1:
+        case 2:
+        case 3:
+        case 4:
             temp = side1[0];
             side1[0] = side2[0];
             side2[0] = side3[0];
             side3[0] = side4[0];
             side4[0] = temp;
             rotateFace( side5 );
-            break;
-        case 2: break;
-        case 3: break;
-        case 4: break;
         case 5: break;
         case 6: break;
 
