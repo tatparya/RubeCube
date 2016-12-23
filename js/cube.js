@@ -22,17 +22,17 @@ var rotateFace = function( side ){
 
 var setColor = function( obj, color ){
     switch( color ){
-        case 0: obj.style.backgroundColor = "#d50000"; // red;
+        case 5: obj.style.backgroundColor = "#d50000"; // red;
                 break;
-        case 1: obj.style.backgroundColor = "#2962ff"; // blue;
+        case 0: obj.style.backgroundColor = "#2962ff"; // blue;
                 break;
         case 2: obj.style.backgroundColor = "#00c853"; // green;
                 break;
-        case 3: obj.style.backgroundColor = "#fafafa"; // grey;
+        case 1: obj.style.backgroundColor = "#fafafa"; // grey;
                 break;
         case 4: obj.style.backgroundColor = "#ff6d00"; // orange;
                 break;
-        case 5: obj.style.backgroundColor = "#ffd600"; // yellow;
+        case 3: obj.style.backgroundColor = "#ffd600"; // yellow;
                 break;
         default:
                 break;
@@ -172,11 +172,11 @@ var right = function(){
 
 var down = function(){
     temp = side1[2];
-    side1[2] = side2[2];
-    side2[2] = side3[2];
-    side3[2] = side4[2];
-    side4[2] = temp;
-    rotateFace( side5 );
+    side1[2] = side4[2];
+    side4[2] = side3[2];
+    side3[2] = side2[2];
+    side2[2] = temp;
+    rotateFace( side6 );
     refreshCube();
 }
 
