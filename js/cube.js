@@ -22,17 +22,17 @@ var rotateFace = function( side ){
 
 var setColor = function( obj, color ){
     switch( color ){
-        case 0: obj.style.backgroundColor = "#d50000"; // red;
+        case 5: obj.style.backgroundColor = "#d50000"; // red;
                 break;
-        case 1: obj.style.backgroundColor = "#2962ff"; // blue;
+        case 0: obj.style.backgroundColor = "#2962ff"; // blue;
                 break;
         case 2: obj.style.backgroundColor = "#00c853"; // green;
                 break;
-        case 3: obj.style.backgroundColor = "#fafafa"; // grey;
+        case 1: obj.style.backgroundColor = "#fafafa"; // grey;
                 break;
         case 4: obj.style.backgroundColor = "#ff6d00"; // orange;
                 break;
-        case 5: obj.style.backgroundColor = "#ffd600"; // yellow;
+        case 3: obj.style.backgroundColor = "#ffd600"; // yellow;
                 break;
         default:
                 break;
@@ -125,6 +125,7 @@ var moveU = function( side ){
 }
 
 var up = function(){
+    console.log("UP");
     temp = side1[0];
     side1[0] = side2[0];
     side2[0] = side3[0];
@@ -135,6 +136,7 @@ var up = function(){
 }
 
 var left = function(){
+    console.log("LEFT");
     temp = [side2[0][0], side2[1][0], side2[2][0]];
     side2[0][0] = side5[0][0];
     side2[1][0] = side5[1][0];
@@ -153,6 +155,7 @@ var left = function(){
 }
 
 var right = function(){
+    console.log("RIGHT");
     temp = [side2[0][2], side2[1][2], side2[2][2]];
     side2[0][2] = side6[0][2];
     side2[1][2] = side6[1][2];
@@ -171,16 +174,18 @@ var right = function(){
 }
 
 var down = function(){
+    console.log("DOWN");
     temp = side1[2];
-    side1[2] = side2[2];
-    side2[2] = side3[2];
-    side3[2] = side4[2];
-    side4[2] = temp;
-    rotateFace( side5 );
+    side1[2] = side4[2];
+    side4[2] = side3[2];
+    side3[2] = side2[2];
+    side2[2] = temp;
+    rotateFace( side6 );
     refreshCube();
 }
 
 var face = function(){
+    console.log("FACE");
     temp = side5[2];
     side5[2] = [side1[2][2],side1[1][2], side1[0][2]];
     side1[0][2] = side6[0][0];
@@ -195,15 +200,16 @@ var face = function(){
 }
 
 var bottom = function(){
+    console.log("BOTTOM");
     temp = side5[0];
-    side5[0] = [side1[2][0],side1[1][0], side1[0][0]];
-    side1[0][0] = side6[2][0];
-    side1[1][0] = side6[2][1];
-    side1[2][0] = side6[2][2];
-    side6[2] = [side3[2][2], side3[1][2], side3[0][2]];
-    side3[0][2] = temp[0];
-    side3[1][2] = temp[1];
-    side3[2][2] = temp[2];
+    side5[0] = [side3[0][2],side3[1][2], side3[2][2]];
+    side3[0][2] = side6[2][2];
+    side3[1][2] = side6[2][1];
+    side3[2][2] = side6[2][0];
+    side6[2] = [side1[0][0], side1[1][0], side1[2][0]];
+    side1[0][0] = temp[2];
+    side1[1][0] = temp[1];
+    side1[2][0] = temp[0];
     rotateFace( side4 );
     refreshCube();
 }
