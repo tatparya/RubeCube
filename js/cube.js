@@ -20,6 +20,17 @@ var rotateFace = function( side ){
     }
 }
 
+var rotateFacePrime = function( side ){
+    for( i = 0; i < 2; i++ )
+    {
+        temp = side[0][i];
+        side[0][i] = side[2-i][0];
+        side[2-i][0] = side[2][2-i];
+        side[2][2-i] = side[i][2];
+        side[i][2] = temp;
+    }
+}
+
 var setColor = function( obj, color ){
     switch( color ){
         case 5: obj.style.backgroundColor = "#d50000"; // red;
@@ -131,6 +142,17 @@ var up = function(){
     side2[0] = side3[0];
     side3[0] = side4[0];
     side4[0] = temp;
+    rotateFace( side5 );
+    refreshCube();
+}
+
+var upPrime = function(){
+    console.log("UPPrime");
+    temp = side4[0];
+    side4[0] = side3[0];
+    side3[0] = side2[0];
+    side2[0] = side1[0];
+    side1[0] = temp;
     rotateFace( side5 );
     refreshCube();
 }
