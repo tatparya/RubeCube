@@ -24,10 +24,10 @@ var rotateFacePrime = function( side ){
     for( i = 0; i < 2; i++ )
     {
         temp = side[0][i];
-        side[0][i] = side[2-i][0];
-        side[2-i][0] = side[2][2-i];
-        side[2][2-i] = side[i][2];
-        side[i][2] = temp;
+        side[0][i] = side[i][2];
+        side[i][2] = side[2][2-i];
+        side[2][2-i] = side[2-i][0];
+        side[2-i][0] = temp;
     }
 }
 
@@ -153,45 +153,7 @@ var upPrime = function(){
     side3[0] = side2[0];
     side2[0] = side1[0];
     side1[0] = temp;
-    rotateFace( side5 );
-    refreshCube();
-}
-
-var left = function(){
-    console.log("LEFT");
-    temp = [side2[0][0], side2[1][0], side2[2][0]];
-    side2[0][0] = side5[0][0];
-    side2[1][0] = side5[1][0];
-    side2[2][0] = side5[2][0];
-    side5[0][0] = side4[2][2];
-    side5[1][0] = side4[1][2];
-    side5[2][0] = side4[0][2];
-    side4[2][2] = side6[0][0];
-    side4[1][2] = side6[1][0];
-    side4[0][2] = side6[2][0];
-    side6[0][0] = temp[0];
-    side6[1][0] = temp[1];
-    side6[2][0] = temp[2];
-    rotateFace( side1 );
-    refreshCube();
-}
-
-var right = function(){
-    console.log("RIGHT");
-    temp = [side2[0][2], side2[1][2], side2[2][2]];
-    side2[0][2] = side6[0][2];
-    side2[1][2] = side6[1][2];
-    side2[2][2] = side6[2][2];
-    side6[0][2] = side4[2][0];
-    side6[1][2] = side4[1][0];
-    side6[2][2] = side4[0][0];
-    side4[2][0] = side5[0][2];
-    side4[1][0] = side5[1][2];
-    side4[0][0] = side5[2][2];
-    side5[0][2] = temp[0];
-    side5[1][2] = temp[1];
-    side5[2][2] = temp[2];
-    rotateFace( side3 );
+    rotateFacePrime( side5 );
     refreshCube();
 }
 
@@ -206,14 +168,74 @@ var down = function(){
     refreshCube();
 }
 
+var downPrime = function(){
+    console.log("DOWNPrime");
+    temp = side4[2];
+    side4[2] = side1[2];
+    side1[2] = side2[2];
+    side2[2] = side3[2];
+    side3[2] = temp;
+    rotateFacePrime( side6 );
+    refreshCube();
+}
+
+var left = function(){
+    console.log("LEFT");
+    temp = [side2[0][0], side2[1][0], side2[2][0]];
+
+    side2[0][0] = side5[0][0];
+    side2[1][0] = side5[1][0];
+    side2[2][0] = side5[2][0];
+
+    side5[0][0] = side4[2][2];
+    side5[1][0] = side4[1][2];
+    side5[2][0] = side4[0][2];
+
+    side4[2][2] = side6[0][0];
+    side4[1][2] = side6[1][0];
+    side4[0][2] = side6[2][0];
+
+    side6[0][0] = temp[0];
+    side6[1][0] = temp[1];
+    side6[2][0] = temp[2];
+    rotateFace( side1 );
+    refreshCube();
+}
+
+var right = function(){
+    console.log("RIGHT");
+    temp = [side2[0][2], side2[1][2], side2[2][2]];
+
+    side2[0][2] = side6[0][2];
+    side2[1][2] = side6[1][2];
+    side2[2][2] = side6[2][2];
+
+    side6[0][2] = side4[2][0];
+    side6[1][2] = side4[1][0];
+    side6[2][2] = side4[0][0];
+
+    side4[2][0] = side5[0][2];
+    side4[1][0] = side5[1][2];
+    side4[0][0] = side5[2][2];
+
+    side5[0][2] = temp[0];
+    side5[1][2] = temp[1];
+    side5[2][2] = temp[2];
+    rotateFace( side3 );
+    refreshCube();
+}
+
 var face = function(){
     console.log("FACE");
     temp = side5[2];
     side5[2] = [side1[2][2],side1[1][2], side1[0][2]];
+
     side1[0][2] = side6[0][0];
     side1[1][2] = side6[0][1];
     side1[2][2] = side6[0][2];
+
     side6[0] = [side3[2][0], side3[1][0], side3[0][0]];
+
     side3[0][0] = temp[0];
     side3[1][0] = temp[1];
     side3[2][0] = temp[2];
@@ -225,10 +247,13 @@ var bottom = function(){
     console.log("BOTTOM");
     temp = side5[0];
     side5[0] = [side3[0][2],side3[1][2], side3[2][2]];
+
     side3[0][2] = side6[2][2];
     side3[1][2] = side6[2][1];
     side3[2][2] = side6[2][0];
+
     side6[2] = [side1[0][0], side1[1][0], side1[2][0]];
+
     side1[0][0] = temp[2];
     side1[1][0] = temp[1];
     side1[2][0] = temp[0];
