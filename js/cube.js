@@ -1,4 +1,5 @@
-//  Init cube
+//  ------------- CUBE SPECS -------------
+
 var invSide = [[-1,-1,-1],[-1,-1,-1],[-1,-1,-1]];
 var side1 = [[0,0,0],[0,0,0],[0,0,0]];
 var side2 = [[1,1,1],[1,1,1],[1,1,1]];
@@ -9,27 +10,45 @@ var side6 = [[5,5,5],[5,5,5],[5,5,5]];
 
 var cube = [ side1, side2, side3, side4, side5, side6 ];
 
-var rotateFace = function( side ){
-    for( i = 0; i < 2; i++ )
-    {
-        temp = side[0][i];
-        side[0][i] = side[2-i][0];
-        side[2-i][0] = side[2][2-i];
-        side[2][2-i] = side[i][2];
-        side[i][2] = temp;
-    }
-}
+var edges =
+[
+    [
+        [ side5[0][1], side4[0][1] ],
+        [ side5[1][2], side3[0][1] ],
+        [ side5[2][1], side2[0][1] ],
+        [ side5[1][0], side1[0][1] ]
+    ],
+    [
+        [ side1[1][0], side4[1][2] ],
+        [ side2[1][0], side1[1][2] ],
+        [ side3[1][0], side2[1][2] ],
+        [ side4[1][0], side3[1][2] ]
+    ],
+    [
+        [ side6[0][1], side2[2][1] ],
+        [ side6[1][2], side3[2][1] ],
+        [ side6[2][1], side4[2][1] ],
+        [ side6[1][0], side1[2][1] ]
+    ]
+];
 
-var rotateFacePrime = function( side ){
-    for( i = 0; i < 2; i++ )
-    {
-        temp = side[0][i];
-        side[0][i] = side[i][2];
-        side[i][2] = side[2][2-i];
-        side[2][2-i] = side[2-i][0];
-        side[2-i][0] = temp;
-    }
-}
+var corners =
+[
+    [
+        [ side6[0][0], side1[0][0], side4[0][2] ],
+        [ side6[0][2], side4[0][0], side3[0][2] ],
+        [ side6[2][2], side3[0][0], side2[0][2] ],
+        [ side6[2][0], side2[0][0], side1[0][2] ]
+    ],
+    [
+        [ side5[0][0], side1[2][2], side2[2][0] ],
+        [ side5[0][2], side2[2][2], side3[2][0] ],
+        [ side5[2][2], side3[2][2], side4[2][0] ],
+        [ side5[2][0], side4[2][2], side1[2][0] ]
+    ]
+];
+
+//  ------------- HELPER FUNCTIONS -------------
 
 var setColor = function( obj, color ){
     switch( color ){
@@ -132,46 +151,94 @@ var randomMove = function(){
 var scrambleCube = function(){
     for( x = 0; x < 30; x++ )
     {
-        randomMove();
+        setTimeout( randomMove, 100 * x );
     }
 }
+
+//  ------------- CUBE SOLVE -------------
+
+var checkFirstCross = function(){
+    if(
+        side5[0][1] == side5[1][1] && side1[1][2] == side1[1][1]    &&
+        side5[1][0] == side5[1][1] && side5[2][1] == side5[1][1]    &&
+        side5[1][2] == side5[1][1] && side3[0][1] == side3[1][1]    &&
+        side5[2][1] == side5[1][1] && side6[0][1] == side6[1][1]
+    ){
+        console.log( "First Cross Complete!" );
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+var buildFirstCross = function(){
+    var y = 0;
+    while( !checkFirstCross() && y < 10 )
+    {
+        console.log( "Move : ", y );
+        y += 1;
+        console.log( findEdgeBlock( side2, side2[1][1] ) );
+    }
+}
+
+var findEdgeBlock = function( side, val ){
+    x = -1;
+    y = -1;
+    if( side[0][1] == val )
+    {
+        x = 0;
+        y = 1;
+    }
+    else if( side[1][2] == val )
+    {
+        x = 1;
+        y = 2;
+    }
+    else if( side[2][1] == val )
+    {
+        x = 2;
+        y = 1;
+    }
+    else if( side[1][0] == val )
+    {
+        x = 1;
+        y = 0;
+    }
+    return {x:x,y:y};
+}
+
+var solveCube = function(){
+    buildFirstCross()
+}
+
+//  ------------- INIT CUBE -------------
 
 console.log( cube );
 initCube();
 
 //  ------------- CUBE MOVES -------------
 
-//  UP
-var moveU = function( side ){
-
-    switch( side ){
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-            temp = side1[0];
-            side1[0] = side2[0];
-            side2[0] = side3[0];
-            side3[0] = side4[0];
-            side4[0] = temp;
-            rotateFace( side5 );
-            break;
-        case 5:
-        case 6:
-            temp = side5[2];
-            side5[2] = [side1[2][2],side1[1][2], side1[0][2]];
-            side1[0][2] = side6[0][0];
-            side1[1][2] = side6[0][1];
-            side1[2][2] = side6[0][2];
-            side6[0] = [side3[2][0], side3[1][0], side3[0][0]];
-            side3[0][0] = temp[0];
-            side3[1][0] = temp[1];
-            side3[2][0] = temp[2];
-            rotateFace( side2 );
-            break;
-
+var rotateFace = function( side ){
+    for( i = 0; i < 2; i++ )
+    {
+        temp = side[0][i];
+        side[0][i] = side[2-i][0];
+        side[2-i][0] = side[2][2-i];
+        side[2][2-i] = side[i][2];
+        side[i][2] = temp;
     }
-    refreshCube();
+}
+
+var rotateFacePrime = function( side ){
+    for( i = 0; i < 2; i++ )
+    {
+        temp = side[0][i];
+        side[0][i] = side[i][2];
+        side[i][2] = side[2][2-i];
+        side[2][2-i] = side[2-i][0];
+        side[2-i][0] = temp;
+    }
 }
 
 var up = function(){
