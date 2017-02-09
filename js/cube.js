@@ -54,9 +54,9 @@ var setColor = function( obj, color ){
     switch( color ){
         case 5: obj.style.backgroundColor = "#d50000"; // red;
                 break;
-        case 0: obj.style.backgroundColor = "#2962ff"; // blue;
+        case 2: obj.style.backgroundColor = "#2962ff"; // blue;
                 break;
-        case 2: obj.style.backgroundColor = "#00c853"; // green;
+        case 0: obj.style.backgroundColor = "#00c853"; // green;
                 break;
         case 1: obj.style.backgroundColor = "#fafafa"; // grey;
                 break;
@@ -155,6 +155,201 @@ var scrambleCube = function(){
     }
 }
 
+var calcMove = function( move, side ){
+    if( move == "up" ){
+        switch( side ){
+            case 1: up();
+                    break;
+            case 2: up();
+                    break;
+            case 3: up();
+                    break;
+            case 4: up();
+                    break;
+            case 5: bottom();
+                    break;
+            case 6: face();
+                    break;
+        }
+    }
+    else if( move == "upPrime" ){
+        switch( side ){
+            case 1: upPrime();
+                    break;
+            case 2: upPrime();
+                    break;
+            case 3: upPrime();
+                    break;
+            case 4: upPrime();
+                    break;
+            case 5: bottomPrime();
+                    break;
+            case 6: facePrime();
+                    break;
+        }
+    }
+    else if( move == "down" ){
+        switch( side ){
+            case 1: down();
+                    break;
+            case 2: down();
+                    break;
+            case 3: down();
+                    break;
+            case 4: down();
+                    break;
+            case 5: face();
+                    break;
+            case 6: bottom();
+                    break;
+        }
+    }
+    else if( move == "downPrime" ){
+        switch( side ){
+            case 1: downPrime();
+                    break;
+            case 2: downPrime();
+                    break;
+            case 3: downPrime();
+                    break;
+            case 4: downPrime();
+                    break;
+            case 5: facePrime();
+                    break;
+            case 6: bottomPrime();
+                    break;
+        }
+    }
+    else if( move == "left" ){
+        switch( side ){
+            case 1: bottom();
+                    break;
+            case 2: left();
+                    break;
+            case 3: face();
+                    break;
+            case 4: right();
+                    break;
+            case 5: left();
+                    break;
+            case 6: left();
+                    break;
+        }
+    }
+    else if( move == "leftPrime" ){
+        switch( side ){
+            case 1: bottomPrime();
+                    break;
+            case 2: leftPrime();
+                    break;
+            case 3: facePrime();
+                    break;
+            case 4: rightPrime();
+                    break;
+            case 5: leftPrime();
+                    break;
+            case 6: leftPrime();
+                    break;
+        }
+    }
+    else if( move == "right" ){
+        switch( side ){
+            case 1: face();
+                    break;
+            case 2: right();
+                    break;
+            case 3: bottom();
+                    break;
+            case 4: left();
+                    break;
+            case 5: right();
+                    break;
+            case 6: right();
+                    break;
+        }
+    }
+    else if( move == "rightPrime" ){
+        switch( side ){
+            case 1: facePrime();
+                    break;
+            case 2: rightPrime();
+                    break;
+            case 3: bottomPrime();
+                    break;
+            case 4: leftPrime();
+                    break;
+            case 5: rightPrime();
+                    break;
+            case 6: rightPrime();
+                    break;
+        }
+    }
+    else if( move == "face" ){
+        switch( side ){
+            case 1: left();
+                    break;
+            case 2: face();
+                    break;
+            case 3: right();
+                    break;
+            case 4: bottom();
+                    break;
+            case 5: up();
+                    break;
+            case 6: down();
+                    break;
+        }
+    }
+    else if( move == "facePrime" ){
+        switch( side ){
+            case 1: leftPrime();
+                    break;
+            case 2: facePrime();
+                    break;
+            case 3: rightPrime();
+                    break;
+            case 4: bottomPrime();
+                    break;
+            case 5: upPrime();
+                    break;
+            case 6: downPrime();
+                    break;
+        }
+    }
+    else if( move == "bottom" ){
+        switch( side ){
+            case 1: right();
+                    break;
+            case 2: bottom();
+                    break;
+            case 3: left();
+                    break;
+            case 4: face();
+                    break;
+            case 5: down();
+                    break;
+            case 6: up();
+                    break;
+        }
+    }
+    else if( move == "bottomPrime" ){
+        switch( side ){
+            case 1: rightPrime();
+                    break;
+            case 2: bottomPrime();
+                    break;
+            case 3: leftPrime();
+                    break;
+            case 4: facePrime();
+                    break;
+            case 5: downPrime();
+                    break;
+            case 6: upPrime();
+                    break;
+        }
+    }
+}
+
 //  ------------- CUBE SOLVE -------------
 
 var checkFirstCross = function(){
@@ -178,33 +373,164 @@ var buildFirstCross = function(){
     {
         console.log( "Move : ", y );
         y += 1;
-        console.log( findEdgeBlock( side2, side2[1][1] ) );
+
+        //  Check bottom edges
+
+
     }
 }
 
-var findEdgeBlock = function( side, val ){
+var findEdgeInBottom = function(){
+    val = side5[1][1];
+    side = side6;
+
+    while(  side[0][1] == val ||
+            side[1][2] == val ||
+            side[2][1] == val ||
+            side[1][0] == val )
+    {
+        if( side[0][1] == val )
+        {
+            console.log( "orange found" );
+            //  Calculate turns
+            switch( side2[2][1] ){
+                case 0:
+                    calcMove( "facePrime", 6 );
+                    calcMove( "left", 6 );
+                    calcMove( "left", 6 );
+                    break;
+                case 1:
+                    calcMove( "up", 6 );
+                    calcMove( "up", 6 );
+                    break;
+                case 2:
+                    calcMove( "face", 6 );
+                    calcMove( "right", 6 );
+                    calcMove( "right", 6 );
+                    break;
+                case 3:
+                    calcMove( "face", 6 );
+                    calcMove( "face", 6 );
+                    calcMove( "down", 6 );
+                    calcMove( "down", 6 );
+                    break;
+            }
+        }
+
+        if( side[1][0] == val )
+        {
+            console.log( "orange found" );
+            //  Calculate turns
+            switch( side1[2][1] ){
+                case 3:
+                    calcMove( "facePrime", 6 );
+                    calcMove( "down", 6 );
+                    calcMove( "down", 6 );
+                    break;
+                case 0:
+                    calcMove( "left", 6 );
+                    calcMove( "left", 6 );
+                    break;
+                case 1:
+                    calcMove( "face", 6 );
+                    calcMove( "up", 6 );
+                    calcMove( "up", 6 );
+                    break;
+                case 2:
+                    calcMove( "face", 6 );
+                    calcMove( "face", 6 );
+                    calcMove( "right", 6 );
+                    calcMove( "right", 6 );
+                    break;
+            }
+        }
+
+        if( side[1][2] == val )
+        {
+            console.log( "orange found" );
+            //  Calculate turns
+            switch( side3[2][1] ){
+                case 1:
+                    calcMove( "facePrime", 6 );
+                    calcMove( "up", 6 );
+                    calcMove( "up", 6 );
+                    break;
+                case 2:
+                    calcMove( "right", 6 );
+                    calcMove( "right", 6 );
+                    break;
+                case 3:
+                    calcMove( "face", 6 );
+                    calcMove( "down", 6 );
+                    calcMove( "down", 6 );
+                    break;
+                case 0:
+                    calcMove( "face", 6 );
+                    calcMove( "face", 6 );
+                    calcMove( "left", 6 );
+                    calcMove( "left", 6 );
+                    break;
+            }
+        }
+
+        if( side[2][1] == val )
+        {
+            console.log( "orange found" );
+            //  Calculate turns
+            switch( side4[2][1] ){
+                case 2:
+                    calcMove( "facePrime", 6 );
+                    calcMove( "right", 6 );
+                    calcMove( "right", 6 );
+                    break;
+                case 3:
+                    calcMove( "down", 6 );
+                    calcMove( "down", 6 );
+                    break;
+                case 0:
+                    calcMove( "face", 6 );
+                    calcMove( "left", 6 );
+                    calcMove( "left", 6 );
+                    break;
+                case 1:
+                    calcMove( "face", 6 );
+                    calcMove( "face", 6 );
+                    calcMove( "up", 6 );
+                    calcMove( "up", 6 );
+                    break;
+            }
+        }
+    }
+}
+
+var findEdgeBlock = function( side, val, right, left, up, down ){
     x = -1;
     y = -1;
+
     if( side[0][1] == val )
     {
         x = 0;
         y = 1;
     }
+
     else if( side[1][2] == val )
     {
         x = 1;
         y = 2;
     }
+
     else if( side[2][1] == val )
     {
         x = 2;
         y = 1;
     }
+
     else if( side[1][0] == val )
     {
         x = 1;
         y = 0;
     }
+
     return {x:x,y:y};
 }
 
