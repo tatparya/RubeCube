@@ -84,7 +84,6 @@ int main()
         printf( "2:\tDisplay Cube\t");
         printf( "3:\tRotate Face\t");
         printf( "4:\tRotate Prime\n");
-        printf( "\nCUBE FUNCTIONS:\n");
         printf( "5:\tUp\t");
         printf( "6:\tUp Prime\n");
         printf( "7:\tDown\t");
@@ -97,6 +96,7 @@ int main()
         printf( "14:\tFace Prime\n");
         printf( "15:\tBottom\t");
         printf( "16:\tBottom Prime\n");
+        printf( "17:\tScramble Cube\n");
 
         scanf( "%d", &input );
 
@@ -148,6 +148,9 @@ int main()
                 break;
             case 16:
                 bottomPrime( cube );
+                break;
+            case 17:
+                scrambleCube( cube, 20 );
                 break;
             default:
                 printf( "Invalid Option, please chose a different option!\n\n" );

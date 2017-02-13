@@ -47,3 +47,38 @@ void solveCube( int cube[6][3][3] )
     displayCorners( corners );
     printf( "Solved!!\n" );
 }
+
+void solveWhiteCross( int cube [6][3][3] )
+{
+
+}
+
+void sovleWhiteCorners( int cube [6][3][3] )
+{
+
+}
+
+void solveSecondLayer( int cube [6][3][3] )
+{
+
+}
+
+void solveOrangeCross( int cube [6][3][3] )
+{
+
+}
+
+void permuteOrangeCross( int cube [6][3][3] )
+{
+
+}
+
+void solveOrangeCorners( int cube [6][3][3] )
+{
+
+}
+
+void permuteOrangeCorners( int cube [6][3][3] )
+{
+
+}

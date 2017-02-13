@@ -1,4 +1,6 @@
 #include "cube.h"
+#include <stdlib.h>
+#include <time.h>
 
 /*
     TODO :
@@ -715,5 +717,37 @@ void calcMove( int cube [6][3][3], char move, int side )
                     break;
             }
             break;
+    }
+}
+
+void scrambleCube( int cube [6][3][3], int numMoves )
+{
+    time_t t;
+    srand((unsigned) time(&t));
+    for( int i = 0; i < numMoves; i++ )
+    {
+        int n;
+        n = ( rand() + 1 ) % 6;
+        switch ( n ) {
+            case 0:
+                left( cube );
+                break;
+            case 1:
+                right( cube );
+                break;
+            case 2:
+                up( cube );
+                break;
+            case 3:
+                down( cube );
+                break;
+            case 4:
+                face( cube );
+                break;
+            case 5:
+                bottom( cube );
+                break;
+        }
+        displayCube( cube );
     }
 }
