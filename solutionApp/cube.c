@@ -6,8 +6,6 @@
     2. Work on solution algorithm
 */
 
-};
-
 void displayCorners( int * corners [2][4][3] )
 {
     printf( "Displaying Corners\n" );
