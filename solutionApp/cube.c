@@ -6,9 +6,84 @@
     2. Work on solution algorithm
 */
 
-void displayCube( int cube[6][3][3] )
+};
+
+void displayCorners( int * corners [2][4][3] )
 {
-    int i,j;
+    printf( "Displaying Corners\n" );
+    for( int i = 0; i < 2; i++ )
+    {
+        printf( "Layer %d:\n", i + 1 );
+        for( int j = 0; j < 4; j++ )
+        {
+            printf( "%d, %d, %d\n", *corners[i][j][0], *corners[i][j][1], *corners[i][j][2] );
+        }
+    }
+}
+
+void displayEdges( int * edges [3][4][2] )
+{
+    printf( "Displaying Edges\n" );
+    for( int i = 0; i < 3; i++ )
+    {
+        printf( "Layer %d:\n", i + 1 );
+        for( int j = 0; j < 4; j++ )
+        {
+            printf( "%d, %d\n", *edges[i][j][0], *edges[i][j][1] );
+        }
+    }
+}
+
+void solveCube( int cube[6][3][3] )
+{
+    printf( "Starting Solving!\n" );
+    printf( "Setting Edges\n" );
+
+    int * edges [3][4][2] = {
+        {
+            { &cube[4][1][0], &cube[0][0][1] },
+            { &cube[4][2][1], &cube[1][0][1] },
+            { &cube[4][1][2], &cube[2][0][1] },
+            { &cube[4][0][1], &cube[3][0][1] }
+        },
+        {
+            { &cube[0][1][0], &cube[3][1][2] },
+            { &cube[1][1][0], &cube[0][1][2] },
+            { &cube[2][1][0], &cube[1][1][2] },
+            { &cube[3][1][0], &cube[2][1][2] }
+        },
+        {
+            { &cube[5][1][0], &cube[0][2][1] },
+            { &cube[5][0][1], &cube[1][2][1] },
+            { &cube[5][1][2], &cube[2][2][1] },
+            { &cube[5][2][1], &cube[3][2][1] }
+        }
+    };
+
+    displayEdges( edges );
+    printf( "Setting Corners\n" );
+
+    int * corners[2][4][3] = {
+        {
+            { &cube[4][2][0],  &cube[0][0][2],  &cube[1][0][0] },
+            { &cube[4][2][2],  &cube[1][0][2],  &cube[2][0][0] },
+            { &cube[4][0][2],  &cube[2][0][2],  &cube[3][0][0] },
+            { &cube[4][0][0],  &cube[3][0][2],  &cube[0][0][0] }
+        },
+        {
+            { &cube[5][0][0],  &cube[0][2][2],  &cube[1][2][0] },
+            { &cube[5][0][2],  &cube[1][2][2],  &cube[2][2][0] },
+            { &cube[5][2][2],  &cube[2][2][2],  &cube[3][2][0] },
+            { &cube[5][2][0],  &cube[3][2][2],  &cube[0][2][0] }
+        }
+    };
+
+    displayCorners( corners );
+    printf( "Solved!!\n" );
+}
+
+void displayCube( int cube[6][3][3] )
+{ int i,j;
     int r,c;
 
     r = 0;
