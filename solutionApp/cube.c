@@ -158,3 +158,340 @@ void displayCubeRow( int cube[6][3][3], int row, int side )
         }
     }
 }
+
+void rotate( int side[3][3] )
+{
+    for( int i = 0; i < 2; i++ )
+    {
+        int temp = side[0][i];
+        side[0][i] = side[2-i][0];
+        side[2-i][0] = side[2][2-i];
+        side[2][2-i] = side[i][2];
+        side[i][2] = temp;
+    }
+}
+
+void rotatePrime( int side[3][3] )
+{
+    for( int i = 0; i < 2; i++ )
+    {
+        int temp = side[0][i];
+        side[0][i] = side[i][2];
+        side[i][2] = side[2][2-i];
+        side[2][2-i] = side[2-i][0];
+        side[2-i][0] = temp;
+    }
+}
+
+void up( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[0][0][0];
+    t2 = cube[0][0][1];
+    t3 = cube[0][0][2];
+
+    cube[0][0][0] = cube[1][0][0];
+    cube[0][0][1] = cube[1][0][1];
+    cube[0][0][2] = cube[1][0][2];
+
+    cube[1][0][0] = cube[2][0][0];
+    cube[1][0][1] = cube[2][0][1];
+    cube[1][0][2] = cube[2][0][2];
+
+    cube[2][0][0] = cube[3][0][0];
+    cube[2][0][1] = cube[3][0][1];
+    cube[2][0][2] = cube[3][0][2];
+
+    cube[3][0][0] = t1;
+    cube[3][0][1] = t2;
+    cube[3][0][2] = t3;
+
+    rotate( cube[4] );
+}
+
+void upPrime( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[3][0][0];
+    t2 = cube[3][0][1];
+    t3 = cube[3][0][2];
+
+    cube[3][0][0] = cube[2][0][0];
+    cube[3][0][1] = cube[2][0][1];
+    cube[3][0][2] = cube[2][0][2];
+
+    cube[2][0][0] = cube[1][0][0];
+    cube[2][0][1] = cube[1][0][1];
+    cube[2][0][2] = cube[1][0][2];
+
+    cube[1][0][0] = cube[0][0][0];
+    cube[1][0][1] = cube[0][0][1];
+    cube[1][0][2] = cube[0][0][2];
+
+    cube[0][0][0] = t1;
+    cube[0][0][1] = t2;
+    cube[0][0][2] = t3;
+
+    rotatePrime( cube[4] );
+}
+
+void down( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[3][2][0];
+    t2 = cube[3][2][1];
+    t3 = cube[3][2][2];
+
+    cube[3][2][0] = cube[2][2][0];
+    cube[3][2][1] = cube[2][2][1];
+    cube[3][2][2] = cube[2][2][2];
+
+    cube[2][2][0] = cube[1][2][0];
+    cube[2][2][1] = cube[1][2][1];
+    cube[2][2][2] = cube[1][2][2];
+
+    cube[1][2][0] = cube[0][2][0];
+    cube[1][2][1] = cube[0][2][1];
+    cube[1][2][2] = cube[0][2][2];
+
+    cube[0][2][0] = t1;
+    cube[0][2][1] = t2;
+    cube[0][2][2] = t3;
+
+    rotate( cube[5] );
+}
+
+void downPrime( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[0][2][0];
+    t2 = cube[0][2][1];
+    t3 = cube[0][2][2];
+
+    cube[0][2][0] = cube[1][2][0];
+    cube[0][2][1] = cube[1][2][1];
+    cube[0][2][2] = cube[1][2][2];
+
+    cube[1][2][0] = cube[2][2][0];
+    cube[1][2][1] = cube[2][2][1];
+    cube[1][2][2] = cube[2][2][2];
+
+    cube[2][2][0] = cube[3][2][0];
+    cube[2][2][1] = cube[3][2][1];
+    cube[2][2][2] = cube[3][2][2];
+
+    cube[3][2][0] = t1;
+    cube[3][2][1] = t2;
+    cube[3][2][2] = t3;
+
+    rotatePrime( cube[5] );
+}
+
+void left( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[1][0][0];
+    t2 = cube[1][1][0];
+    t3 = cube[1][2][0];
+
+    cube[1][0][0] = cube[4][0][0];
+    cube[1][1][0] = cube[4][1][0];
+    cube[1][2][0] = cube[4][2][0];
+
+    cube[4][0][0] = cube[3][2][2];
+    cube[4][1][0] = cube[3][1][2];
+    cube[4][2][0] = cube[3][0][2];
+
+    cube[3][2][2] = cube[5][0][0];
+    cube[3][1][2] = cube[5][1][0];
+    cube[3][0][2] = cube[5][2][0];
+
+    cube[5][0][0] = t1;
+    cube[5][1][0] = t2;
+    cube[5][2][0] = t3;
+
+    rotate( cube[0] );
+}
+
+void leftPrime( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[1][0][0];
+    t2 = cube[1][1][0];
+    t3 = cube[1][2][0];
+
+    cube[1][0][0] = cube[5][0][0];
+    cube[1][1][0] = cube[5][1][0];
+    cube[1][2][0] = cube[5][2][0];
+
+    cube[5][0][0] = cube[3][2][2];
+    cube[5][1][0] = cube[3][1][2];
+    cube[5][2][0] = cube[3][0][2];
+
+    cube[3][2][2] = cube[4][0][0];
+    cube[3][1][2] = cube[4][1][0];
+    cube[3][0][2] = cube[4][2][0];
+
+    cube[4][0][0] = t1;
+    cube[4][1][0] = t2;
+    cube[4][2][0] = t3;
+
+    rotatePrime( cube[0] );
+}
+
+void right( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[1][0][2];
+    t2 = cube[1][1][2];
+    t3 = cube[1][2][2];
+
+    cube[1][0][2] = cube[5][0][2];
+    cube[1][1][2] = cube[5][1][2];
+    cube[1][2][2] = cube[5][2][2];
+
+    cube[5][0][2] = cube[3][2][0];
+    cube[5][1][2] = cube[3][1][0];
+    cube[5][2][2] = cube[3][0][0];
+
+    cube[3][2][0] = cube[4][0][2];
+    cube[3][1][0] = cube[4][1][2];
+    cube[3][0][0] = cube[4][2][2];
+
+    cube[4][0][2] = t1;
+    cube[4][1][2] = t2;
+    cube[4][2][2] = t3;
+
+    rotate( cube[2] );
+
+}
+
+void rightPrime( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[1][0][2];
+    t2 = cube[1][1][2];
+    t3 = cube[1][2][2];
+
+    cube[1][0][2] = cube[4][0][2];
+    cube[1][1][2] = cube[4][1][2];
+    cube[1][2][2] = cube[4][2][2];
+
+    cube[4][0][2] = cube[3][2][0];
+    cube[4][1][2] = cube[3][1][0];
+    cube[4][2][2] = cube[3][0][0];
+
+    cube[3][2][0] = cube[5][0][2];
+    cube[3][1][0] = cube[5][1][2];
+    cube[3][0][0] = cube[5][2][2];
+
+    cube[5][0][2] = t1;
+    cube[5][1][2] = t2;
+    cube[5][2][2] = t3;
+
+    rotatePrime( cube[2] );
+}
+
+void face( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[0][0][2];
+    t2 = cube[0][1][2];
+    t3 = cube[0][2][2];
+
+    cube[0][0][2] = cube[5][0][0];
+    cube[0][1][2] = cube[5][0][1];
+    cube[0][2][2] = cube[5][0][2];
+
+    cube[5][0][0] = cube[2][2][0];
+    cube[5][0][1] = cube[2][1][0];
+    cube[5][0][2] = cube[2][0][0];
+
+    cube[2][2][0] = cube[4][2][2];
+    cube[2][1][0] = cube[4][2][1];
+    cube[2][0][0] = cube[4][2][0];
+
+    cube[4][2][2] = t1;
+    cube[4][2][1] = t2;
+    cube[4][2][0] = t3;
+
+    rotate( cube[1] );
+}
+
+void facePrime( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[0][0][2];
+    t2 = cube[0][1][2];
+    t3 = cube[0][2][2];
+
+    cube[0][0][2] = cube[4][2][2];
+    cube[0][1][2] = cube[4][2][1];
+    cube[0][2][2] = cube[4][2][0];
+
+    cube[4][2][2] = cube[2][2][0];
+    cube[4][2][1] = cube[2][1][0];
+    cube[4][2][0] = cube[2][0][0];
+
+    cube[2][2][0] = cube[5][0][0];
+    cube[2][1][0] = cube[5][0][1];
+    cube[2][0][0] = cube[5][0][2];
+
+    cube[5][0][0] = t1;
+    cube[5][0][1] = t2;
+    cube[5][0][2] = t3;
+
+    rotatePrime( cube[1] );
+}
+
+void bottom( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[0][0][0];
+    t2 = cube[0][1][0];
+    t3 = cube[0][2][0];
+
+    cube[0][0][0] = cube[4][0][2];
+    cube[0][1][0] = cube[4][0][1];
+    cube[0][2][0] = cube[4][0][0];
+
+    cube[4][0][2] = cube[2][2][2];
+    cube[4][0][1] = cube[2][1][2];
+    cube[4][0][0] = cube[2][0][2];
+
+    cube[2][2][2] = cube[5][2][0];
+    cube[2][1][2] = cube[5][2][1];
+    cube[2][0][2] = cube[5][2][2];
+
+    cube[5][2][0] = t1;
+    cube[5][2][1] = t2;
+    cube[5][2][2] = t3;
+
+    rotate( cube[3] );
+}
+
+void bottomPrime( int cube [6][3][3] )
+{
+    int t1, t2, t3;
+    t1 = cube[0][0][0];
+    t2 = cube[0][1][0];
+    t3 = cube[0][2][0];
+
+    cube[0][0][0] = cube[5][2][0];
+    cube[0][1][0] = cube[5][2][1];
+    cube[0][2][0] = cube[5][2][2];
+
+    cube[5][2][0] = cube[2][2][2];
+    cube[5][2][1] = cube[2][1][2];
+    cube[5][2][2] = cube[2][0][2];
+
+    cube[2][2][2] = cube[4][0][2];
+    cube[2][1][2] = cube[4][0][1];
+    cube[2][0][2] = cube[4][0][0];
+
+    cube[4][0][2] = t1;
+    cube[4][0][1] = t2;
+    cube[4][0][0] = t3;
+
+    rotatePrime( cube[3] );
+}
