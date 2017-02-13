@@ -32,54 +32,6 @@ void displayEdges( int * edges [3][4][2] )
     }
 }
 
-void solveCube( int cube[6][3][3] )
-{
-    printf( "Starting Solving!\n" );
-    printf( "Setting Edges\n" );
-
-    int * edges [3][4][2] = {
-        {
-            { &cube[4][1][0], &cube[0][0][1] },
-            { &cube[4][2][1], &cube[1][0][1] },
-            { &cube[4][1][2], &cube[2][0][1] },
-            { &cube[4][0][1], &cube[3][0][1] }
-        },
-        {
-            { &cube[0][1][0], &cube[3][1][2] },
-            { &cube[1][1][0], &cube[0][1][2] },
-            { &cube[2][1][0], &cube[1][1][2] },
-            { &cube[3][1][0], &cube[2][1][2] }
-        },
-        {
-            { &cube[5][1][0], &cube[0][2][1] },
-            { &cube[5][0][1], &cube[1][2][1] },
-            { &cube[5][1][2], &cube[2][2][1] },
-            { &cube[5][2][1], &cube[3][2][1] }
-        }
-    };
-
-    displayEdges( edges );
-    printf( "Setting Corners\n" );
-
-    int * corners[2][4][3] = {
-        {
-            { &cube[4][2][0],  &cube[0][0][2],  &cube[1][0][0] },
-            { &cube[4][2][2],  &cube[1][0][2],  &cube[2][0][0] },
-            { &cube[4][0][2],  &cube[2][0][2],  &cube[3][0][0] },
-            { &cube[4][0][0],  &cube[3][0][2],  &cube[0][0][0] }
-        },
-        {
-            { &cube[5][0][0],  &cube[0][2][2],  &cube[1][2][0] },
-            { &cube[5][0][2],  &cube[1][2][2],  &cube[2][2][0] },
-            { &cube[5][2][2],  &cube[2][2][2],  &cube[3][2][0] },
-            { &cube[5][2][0],  &cube[3][2][2],  &cube[0][2][0] }
-        }
-    };
-
-    displayCorners( corners );
-    printf( "Solved!!\n" );
-}
-
 void displayCube( int cube[6][3][3] )
 { int i,j;
     int r,c;
@@ -494,4 +446,274 @@ void bottomPrime( int cube [6][3][3] )
     cube[4][0][0] = t3;
 
     rotatePrime( cube[3] );
+}
+
+void calcMove( int cube [6][3][3], char move, int side )
+{
+    switch ( move ) {
+        case 'u':
+            switch ( side ) {
+                case 0:
+                    up( cube );
+                    break;
+                case 1:
+                    up( cube );
+                    break;
+                case 2:
+                    up( cube );
+                    break;
+                case 3:
+                    up( cube );
+                    break;
+                case 4:
+                    bottom( cube );
+                    break;
+                case 5:
+                    face( cube );
+                    break;
+            }
+            break;
+        case 'U':
+            switch ( side ) {
+                case 0:
+                    upPrime( cube );
+                    break;
+                case 1:
+                    upPrime( cube );
+                    break;
+                case 2:
+                    upPrime( cube );
+                    break;
+                case 3:
+                    upPrime( cube );
+                    break;
+                case 4:
+                    bottomPrime( cube );
+                    break;
+                case 5:
+                    facePrime( cube );
+                    break;
+            }
+            break;
+        case 'd':
+            switch ( side ) {
+                case 0:
+                    down( cube );
+                    break;
+                case 1:
+                    down( cube );
+                    break;
+                case 2:
+                    down( cube );
+                    break;
+                case 3:
+                    down( cube );
+                    break;
+                case 4:
+                    face( cube );
+                    break;
+                case 5:
+                    bottom( cube );
+                    break;
+            }
+            break;
+        case 'D':
+            switch ( side ) {
+                case 0:
+                    downPrime( cube );
+                    break;
+                case 1:
+                    downPrime( cube );
+                    break;
+                case 2:
+                    downPrime( cube );
+                    break;
+                case 3:
+                    downPrime( cube );
+                    break;
+                case 4:
+                    facePrime( cube );
+                    break;
+                case 5:
+                    bottomPrime( cube );
+                    break;
+            }
+            break;
+        case 'l':
+            switch ( side ) {
+                case 0:
+                    bottom( cube );
+                    break;
+                case 1:
+                    left( cube );
+                    break;
+                case 2:
+                    face( cube );
+                    break;
+                case 3:
+                    right( cube );
+                    break;
+                case 4:
+                    left( cube );
+                    break;
+                case 5:
+                    left( cube );
+                    break;
+            }
+            break;
+        case 'L':
+            switch ( side ) {
+                case 0:
+                    bottomPrime( cube );
+                    break;
+                case 1:
+                    leftPrime( cube );
+                    break;
+                case 2:
+                    facePrime( cube );
+                    break;
+                case 3:
+                    rightPrime( cube );
+                    break;
+                case 4:
+                    leftPrime( cube );
+                    break;
+                case 5:
+                    leftPrime( cube );
+                    break;
+            }
+            break;
+        case 'r':
+            switch ( side ) {
+                case 0:
+                    face( cube );
+                    break;
+                case 1:
+                    right( cube );
+                    break;
+                case 2:
+                    bottom( cube );
+                    break;
+                case 3:
+                    left( cube );
+                    break;
+                case 4:
+                    right( cube );
+                    break;
+                case 5:
+                    right( cube );
+                    break;
+            }
+            break;
+        case 'R':
+            switch ( side ) {
+                case 0:
+                    facePrime( cube );
+                    break;
+                case 1:
+                    rightPrime( cube );
+                    break;
+                case 2:
+                    bottomPrime( cube );
+                    break;
+                case 3:
+                    leftPrime( cube );
+                    break;
+                case 4:
+                    rightPrime( cube );
+                    break;
+                case 5:
+                    rightPrime( cube );
+                    break;
+            }
+            break;
+        case 'f':
+            switch ( side ) {
+                case 0:
+                    left( cube );
+                    break;
+                case 1:
+                    face( cube );
+                    break;
+                case 2:
+                    right( cube );
+                    break;
+                case 3:
+                    bottom( cube );
+                    break;
+                case 4:
+                    up( cube );
+                    break;
+                case 5:
+                    down( cube );
+                    break;
+            }
+            break;
+        case 'F':
+            switch ( side ) {
+                case 0:
+                    leftPrime( cube );
+                    break;
+                case 1:
+                    facePrime( cube );
+                    break;
+                case 2:
+                    rightPrime( cube );
+                    break;
+                case 3:
+                    bottomPrime( cube );
+                    break;
+                case 4:
+                    upPrime( cube );
+                    break;
+                case 5:
+                    downPrime( cube );
+                    break;
+            }
+            break;
+        case 'b':
+            switch ( side ) {
+                case 0:
+                    right( cube );
+                    break;
+                case 1:
+                    bottom( cube );
+                    break;
+                case 2:
+                    left( cube );
+                    break;
+                case 3:
+                    face( cube );
+                    break;
+                case 4:
+                    down( cube );
+                    break;
+                case 5:
+                    up( cube );
+                    break;
+            }
+            break;
+        case 'B':
+            switch ( side ) {
+                case 0:
+                    rightPrime( cube );
+                    break;
+                case 1:
+                    bottomPrime( cube );
+                    break;
+                case 2:
+                    leftPrime( cube );
+                    break;
+                case 3:
+                    facePrime( cube );
+                    break;
+                case 4:
+                    downPrime( cube );
+                    break;
+                case 5:
+                    upPrime( cube );
+                    break;
+            }
+            break;
+    }
 }

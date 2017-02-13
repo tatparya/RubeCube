@@ -1,9 +1,12 @@
-#include "cube.c"
 #include <stdio.h>
+
+#include "cube.c"
+#include "solution.c"
 
 int main()
 {
     printf( "Hello World!\n" );
+    /*
 
     int cube [6][3][3] = {
         {
@@ -37,7 +40,8 @@ int main()
             {3,2,1}
         }
     };
-/*
+    */
+
     int cube [6][3][3] = {
         {
             {0,0,0},
@@ -69,7 +73,7 @@ int main()
             {5,5,5},
             {5,5,5}
         }
-    };*/
+    };
 
     int input = -1;
     while( input != 0 )
@@ -99,6 +103,7 @@ int main()
         switch ( input ) {
             case 1:
                 solveCube( cube );
+                continue;
                 break;
             case 2:
                 break;
