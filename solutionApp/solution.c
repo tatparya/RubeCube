@@ -64,6 +64,11 @@ void solveCube( int cube[6][3][3] )
 
     displayCube( cube );
 
+    printf( "~~~~~~~~~ Solving Orange Cross ~~~~~~~~~\n" );
+    permuteOrangeCross( cube, edges );
+
+    displayCube( cube );
+
     printf( "Solved!!\n" );
 }
 
@@ -594,6 +599,13 @@ void solveOrangeCross( int cube [6][3][3], int * edges [3][4][2]  )
             }
         }
 
+        //  Display cube if count = 1
+        if( count == 1 )
+        {
+            printf( "THIS SHOULD NEVER HAPPEN!! FIRE!!\n" );
+            displayCube( cube );
+        }
+
         //  Break if count 4
         if( count == 4 )
         {
@@ -679,9 +691,92 @@ void solveOrangeCross( int cube [6][3][3], int * edges [3][4][2]  )
     }
 }
 
-void permuteOrangeCross( int cube [6][3][3] )
+void permuteOrangeCross( int cube [6][3][3], int * edges [3][4][2] )
 {
+    int done = 0;
+    int count = 0;
+    int opSide = 0;
+    int first = -1;
+    int second = -1;
+    int move = 0;
+    int dst = -1;
 
+    while( !done )
+    {
+        count = 0;
+        //  Check if done
+        for( int side = 0; side < 4; side++ )
+        {
+            first = *edges[2][side][1];
+            second = *edges[2][ ( side + 1 ) % 4 ][1] - 1;
+            second = ( second == -1 ) ? 3 : second;
+
+            if( first == second )
+            {
+                count++;
+                opSide = side;
+            }
+        }
+
+        printf( "~~~~~~~~~ Count : %d ~~~~~~~~~\n", count );
+
+        if( count == 4 || count == 3 )
+        {
+            break;
+        }
+
+        if( count == 0 )
+        {
+            calcMove( cube, 'l', 0 );
+            calcMove( cube, 'd', 0 );
+            calcMove( cube, 'L', 0 );
+            calcMove( cube, 'd', 0 );
+            calcMove( cube, 'l', 0 );
+            calcMove( cube, 'd', 0 );
+            calcMove( cube, 'd', 0 );
+            calcMove( cube, 'L', 0 );
+            calcMove( cube, 'd', 0 );
+            calcMove( cube, 'l', 2 );
+            calcMove( cube, 'd', 2 );
+            calcMove( cube, 'L', 2 );
+            calcMove( cube, 'd', 2 );
+            calcMove( cube, 'l', 2 );
+            calcMove( cube, 'd', 2 );
+            calcMove( cube, 'd', 2 );
+            calcMove( cube, 'L', 2 );
+            calcMove( cube, 'd', 2 );
+        }
+
+        if( count == 1 )
+        {
+            opSide = ( opSide + 2 ) % 4;
+            calcMove( cube, 'l', opSide );
+            calcMove( cube, 'd', opSide );
+            calcMove( cube, 'L', opSide );
+            calcMove( cube, 'd', opSide );
+            calcMove( cube, 'l', opSide );
+            calcMove( cube, 'd', opSide );
+            calcMove( cube, 'd', opSide );
+            calcMove( cube, 'L', opSide );
+            calcMove( cube, 'd', opSide );
+        }
+    }
+
+    //  Place in right spot
+    dst = *edges[2][0][1];
+    if( dst == 1 )
+    {
+        calcMove( cube, 'd', 0 );
+    }
+    else if( dst == 2 )
+    {
+        calcMove( cube, 'd', 0 );
+        calcMove( cube, 'd', 0 );
+    }
+    else if( dst == 3 )
+    {
+        calcMove( cube, 'D', 0 );
+    }
 }
 
 void solveOrangeCorners( int cube [6][3][3] )
