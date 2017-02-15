@@ -64,8 +64,18 @@ void solveCube( int cube[6][3][3] )
 
     displayCube( cube );
 
-    printf( "~~~~~~~~~ Solving Orange Cross ~~~~~~~~~\n" );
+    printf( "~~~~~~~~~ Permuting Orange Cross ~~~~~~~~~\n" );
     permuteOrangeCross( cube, edges );
+
+    displayCube( cube );
+
+    printf( "~~~~~~~~~ Solving Orange Corners ~~~~~~~~~\n" );
+    solveOrangeCorners( cube, corners );
+
+    displayCube( cube );
+
+    printf( "~~~~~~~~~ Permuting Orange Corners ~~~~~~~~~\n" );
+    permuteOrangeCorners( cube, corners );
 
     displayCube( cube );
 
@@ -693,7 +703,6 @@ void solveOrangeCross( int cube [6][3][3], int * edges [3][4][2]  )
 
 void permuteOrangeCross( int cube [6][3][3], int * edges [3][4][2] )
 {
-    int done = 0;
     int count = 0;
     int opSide = 0;
     int first = -1;
@@ -701,7 +710,7 @@ void permuteOrangeCross( int cube [6][3][3], int * edges [3][4][2] )
     int move = 0;
     int dst = -1;
 
-    while( !done )
+    while( count < 4 )
     {
         count = 0;
         //  Check if done
@@ -779,12 +788,155 @@ void permuteOrangeCross( int cube [6][3][3], int * edges [3][4][2] )
     }
 }
 
-void solveOrangeCorners( int cube [6][3][3] )
+void solveOrangeCorners( int cube [6][3][3], int * corners [2][4][3] )
 {
+    int count = 0;
+    int opSide = 0;
+    int first = -1;
+    int second = -1;
+    int third = -1;
+    int move = 0;
+    int dst = -1;
+
+    while( count < 4 )
+    {
+        opSide = 0;
+        count = 0;
+        //  Check if done
+        for( int side = 0; side < 4; side++ )
+        {
+
+            //  Find dst
+            for( int face = 0; face < 3; face++ )
+            {
+                if( *corners[1][side][face] == 5 )
+                {
+                    dst = *corners[1][side][ ( face + 1 ) % 3 ];
+                }
+            }
+
+            printf( "side = %d\n", side );
+            printf( "dst = %d\n", dst );
+
+            if( dst == side )
+            {
+                count++;
+                opSide = side;
+            }
+        }
+
+        printf( "~~~~~~~~~ Count : %d ~~~~~~~~~\n", count );
+
+        if( count == 4 )
+        {
+            break;
+        }
+
+        if( count == 1 || count == 0 )
+        {
+            opSide = ( opSide + 1 ) % 4;
+            calcMove( cube, 'd', opSide );
+            calcMove( cube, 'l', opSide );
+            calcMove( cube, 'D', opSide );
+            calcMove( cube, 'R', opSide );
+            calcMove( cube, 'd', opSide );
+            calcMove( cube, 'L', opSide );
+            calcMove( cube, 'D', opSide );
+            calcMove( cube, 'r', opSide );
+        }
+    }
+}
+
+void permuteOrangeCorners( int cube [6][3][3], int * corners [2][4][3] )
+{
+    int count = 0;
+    int opSide = 0;
+    int first = -1;
+    int second = -1;
+    int third = -1;
+    int move = 0;
+    int dst = -1;
+    int stepCount = 0;
+    int checkSide = -1;
+
+    while( count < 4 && stepCount < 6 )
+    {
+        opSide = 0;
+        count = 0;
+        //  Check if correct orientation
+        for( int side = 3; side >= 0; side-- )
+        {
+            if( *corners[1][side][0] == 5 )
+            {
+                opSide = side;
+                count++;
+            }
+        }
+
+        printf( "~~~~~~~~~ Count : %d ~~~~~~~~~\n", count );
+
+        if( count == 4 )
+        {
+            break;
+        }
+        else
+        {
+            checkSide = ( opSide + 3 ) % 4;
+            for( int i = 0; i < 4 - count; i++ )
+            {
+                while( *corners[1][checkSide][0] != 5 && stepCount < 6 )
+                {
+                    calcMove( cube, 'L', opSide );
+                    calcMove( cube, 'u', opSide );
+                    calcMove( cube, 'l', opSide );
+                    calcMove( cube, 'U', opSide );
+
+                    stepCount++;
+                }
+
+                while( *corners[1][checkSide][0] == 5 && !orangeCornersDone( cube, corners ) )
+                {
+                    calcMove( cube, 'D', opSide );
+                }
+            }
+        }
+    }
+
+    //  Place in right spot
+    dst = *corners[1][0][1];
+    if( dst == 1 )
+    {
+        calcMove( cube, 'd', 0 );
+    }
+    else if( dst == 2 )
+    {
+        calcMove( cube, 'd', 0 );
+        calcMove( cube, 'd', 0 );
+    }
+    else if( dst == 3 )
+    {
+        calcMove( cube, 'D', 0 );
+    }
 
 }
 
-void permuteOrangeCorners( int cube [6][3][3] )
+int orangeCornersDone( int cube [6][3][3], int * corners[2][4][3] )
 {
+    int count = 0;
+    for( int side = 3; side >= 0; side-- )
+    {
+        if( *corners[1][side][0] == 5 )
+        {
+            count++;
+        }
+    }
 
+    if( count == 4 )
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
