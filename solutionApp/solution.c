@@ -59,6 +59,11 @@ void solveCube( int cube[6][3][3] )
 
     displayCube( cube );
 
+    printf( "~~~~~~~~~ Solving Orange Cross ~~~~~~~~~\n" );
+    solveOrangeCross( cube, edges );
+
+    displayCube( cube );
+
     printf( "Solved!!\n" );
 }
 
@@ -571,9 +576,107 @@ void solveSecondLayer( int cube [6][3][3], int * edges [3][4][2] )
     }
 }
 
-void solveOrangeCross( int cube [6][3][3] )
+void solveOrangeCross( int cube [6][3][3], int * edges [3][4][2]  )
 {
+    int count = 0;
+    int opSide = -1;
 
+    while( count < 4 )
+    {
+        count = 0;
+        //  Check if cross is in place
+        for( int side = 0; side < 4; side++ )
+        {
+            printf( "Edge %d : %d\n", side, *edges[2][side][0] );
+            if( *edges[2][side][0] == 5 )
+            {
+                count++;
+            }
+        }
+
+        //  Break if count 4
+        if( count == 4 )
+        {
+            break;
+        }
+
+        //  Analyze and build cross
+        //  Check if dot
+        if( count == 0 )
+        {
+            calcMove( cube, 'f', 0 );
+            calcMove( cube, 'l', 0 );
+            calcMove( cube, 'd', 0 );
+            calcMove( cube, 'L', 0 );
+            calcMove( cube, 'D', 0 );
+            calcMove( cube, 'l', 2 );
+            calcMove( cube, 'd', 2 );
+            calcMove( cube, 'L', 2 );
+            calcMove( cube, 'D', 2 );
+            calcMove( cube, 'l', 2 );
+            calcMove( cube, 'd', 2 );
+            calcMove( cube, 'L', 2 );
+            calcMove( cube, 'D', 2 );
+            calcMove( cube, 'F', 2 );
+        }
+
+        //  Check if 'L'
+        if( count == 2 )
+        {
+            //  Find op side
+            for( int side = 0; side < 4; side++ )
+            {
+                printf( "s1: %d, s2: %d\n", *edges[2][side][0],  *edges[2][ ( side + 1 ) % 4][0] );
+                if( *edges[2][side][0] == 5 && *edges[2][ ( side + 1 ) % 4][0] == 5 )
+                {
+                    opSide = ( side + 3 ) % 4;
+                }
+            }
+
+            //  Check if opSide found
+            if( opSide != -1 )
+            {
+                printf( "~~~~~~~~~~~~~~~~~~\t");
+                printf( "2) Op side found: %d", opSide );
+                printf( "\t~~~~~~~~~~~~~~~~~~\n");
+
+                calcMove( cube, 'f', opSide );
+                calcMove( cube, 'l', opSide );
+                calcMove( cube, 'd', opSide );
+                calcMove( cube, 'L', opSide );
+                calcMove( cube, 'D', opSide );
+                calcMove( cube, 'l', opSide );
+                calcMove( cube, 'd', opSide );
+                calcMove( cube, 'L', opSide );
+                calcMove( cube, 'D', opSide );
+                calcMove( cube, 'F', opSide );
+            }
+            //  Find straight opSide
+            else
+            {
+                for( int side = 0; side < 2; side++ )
+                {
+                    printf( "s1: %d, s2: %d\n", *edges[2][side][0],  *edges[2][side + 2][0] );
+                    if( *edges[2][side][0] == 5 && *edges[2][side + 2][0] == 5 )
+                    {
+                        opSide = side + 1;
+                    }
+                }
+
+                printf( "~~~~~~~~~~~~~~~~~~\t");
+                printf( "3) opSide found: %d", opSide );
+                printf( "\t~~~~~~~~~~~~~~~~~~\n");
+
+                calcMove( cube, 'f', opSide );
+                calcMove( cube, 'l', opSide );
+                calcMove( cube, 'd', opSide );
+                calcMove( cube, 'L', opSide );
+                calcMove( cube, 'D', opSide );
+                calcMove( cube, 'F', opSide );
+            }
+
+        }
+    }
 }
 
 void permuteOrangeCross( int cube [6][3][3] )
