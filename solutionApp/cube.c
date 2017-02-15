@@ -452,6 +452,10 @@ void bottomPrime( int cube [6][3][3] )
 
 void calcMove( int cube [6][3][3], char move, int side )
 {
+    printf( "\nCube before \n" );
+    printf( "Move : %c, on side %d\n", move, side );
+    displayCube( cube );
+
     switch ( move ) {
         case 'u':
             switch ( side ) {
@@ -718,6 +722,7 @@ void calcMove( int cube [6][3][3], char move, int side )
             }
             break;
     }
+    displayCube( cube );
 }
 
 void scrambleCube( int cube [6][3][3], int numMoves )
