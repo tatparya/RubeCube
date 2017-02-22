@@ -102,7 +102,11 @@ int main()
 
         switch ( input ) {
             case 1:
-                solveCube( cube );
+                if( solveCube( cube ) != 0 )
+                {
+                    printf( "SOLUTION FAILED\n" );
+                    return -1;
+                }
                 continue;
                 break;
             case 2:

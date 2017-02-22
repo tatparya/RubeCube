@@ -1,8 +1,9 @@
 #include "solution.h"
 
-void solveCube( int cube[6][3][3] )
+int solveCube( int cube[6][3][3] )
 {
     printf( "Starting Solving!\n" );
+    int input;
 
     // printf( "Setting Edges\n" );
     int * edges [3][4][2] = {
@@ -45,44 +46,59 @@ void solveCube( int cube[6][3][3] )
     // displayCorners( corners );
 
     printf( "~~~~~~~~~  Solving White Cross ~~~~~~~~~\n" );
-    solveWhiteCross( cube, edges );
+    if( solveWhiteCross( cube, edges ) != 0 )
+        return -1;
 
     displayCube( cube );
 
     printf( "~~~~~~~~~ Solving White Corners ~~~~~~~~~\n" );
-    sovleWhiteCorners( cube, corners );
+    scanf( "%d", &input );
+    if( sovleWhiteCorners( cube, corners ) != 0 )
+        return -1;
 
     displayCube( cube );
 
     printf( "~~~~~~~~~ Solving Second Layer ~~~~~~~~~\n" );
-    solveSecondLayer( cube, edges );
+    scanf( "%d", &input );
+    if( solveSecondLayer( cube, edges ) != 0 )
+        return -1;
 
     displayCube( cube );
 
     printf( "~~~~~~~~~ Solving Orange Cross ~~~~~~~~~\n" );
-    solveOrangeCross( cube, edges );
+    scanf( "%d", &input );
+    if( solveOrangeCross( cube, edges ) != 0 )
+        return -1;
 
     displayCube( cube );
 
     printf( "~~~~~~~~~ Permuting Orange Cross ~~~~~~~~~\n" );
-    permuteOrangeCross( cube, edges );
+    scanf( "%d", &input );
+    if( permuteOrangeCross( cube, edges ) != 0 )
+        return -1;
 
     displayCube( cube );
 
     printf( "~~~~~~~~~ Solving Orange Corners ~~~~~~~~~\n" );
-    solveOrangeCorners( cube, corners );
+    scanf( "%d", &input );
+    if( solveOrangeCorners( cube, corners ) != 0 )
+        return -1;
 
     displayCube( cube );
 
     printf( "~~~~~~~~~ Permuting Orange Corners ~~~~~~~~~\n" );
-    permuteOrangeCorners( cube, corners );
+    scanf( "%d", &input );
+    if( permuteOrangeCorners( cube, corners ) != 0 )
+        return -1;
 
     displayCube( cube );
 
     printf( "Solved!!\n" );
+
+    return 0;
 }
 
-void solveWhiteCross( int cube [6][3][3], int * edges [3][4][2] )
+int solveWhiteCross( int cube [6][3][3], int * edges [3][4][2] )
 {
     int count = 0;
     int dst = -1;
@@ -213,10 +229,10 @@ void solveWhiteCross( int cube [6][3][3], int * edges [3][4][2] )
         }
     }
 
-
+    return 0;
 }
 
-void sovleWhiteCorners( int cube [6][3][3], int * corners [2][4][3] )
+int sovleWhiteCorners( int cube [6][3][3], int * corners [2][4][3] )
 {
     int done = 0;
     int count = 0;
@@ -376,9 +392,11 @@ void sovleWhiteCorners( int cube [6][3][3], int * corners [2][4][3] )
             calcMove( cube, 'r', side );
         }
     }
+
+    return 0;
 }
 
-void solveSecondLayer( int cube [6][3][3], int * edges [3][4][2] )
+int solveSecondLayer( int cube [6][3][3], int * edges [3][4][2] )
 {
     int count = 0;
     int other = 0;
@@ -587,11 +605,12 @@ void solveSecondLayer( int cube [6][3][3], int * edges [3][4][2] )
                 calcMove( cube, 'f', side );
             }
         }
-
     }
+
+    return 0;
 }
 
-void solveOrangeCross( int cube [6][3][3], int * edges [3][4][2]  )
+int solveOrangeCross( int cube [6][3][3], int * edges [3][4][2]  )
 {
     int count = 0;
     int opSide = -1;
@@ -614,6 +633,7 @@ void solveOrangeCross( int cube [6][3][3], int * edges [3][4][2]  )
         {
             printf( "THIS SHOULD NEVER HAPPEN!! FIRE!!\n" );
             displayCube( cube );
+            return -1;
         }
 
         //  Break if count 4
@@ -631,6 +651,8 @@ void solveOrangeCross( int cube [6][3][3], int * edges [3][4][2]  )
             calcMove( cube, 'd', 0 );
             calcMove( cube, 'L', 0 );
             calcMove( cube, 'D', 0 );
+            calcMove( cube, 'F', 0 );
+            calcMove( cube, 'f', 2 );
             calcMove( cube, 'l', 2 );
             calcMove( cube, 'd', 2 );
             calcMove( cube, 'L', 2 );
@@ -699,9 +721,11 @@ void solveOrangeCross( int cube [6][3][3], int * edges [3][4][2]  )
 
         }
     }
+
+    return 0;
 }
 
-void permuteOrangeCross( int cube [6][3][3], int * edges [3][4][2] )
+int permuteOrangeCross( int cube [6][3][3], int * edges [3][4][2] )
 {
     int count = 0;
     int opSide = 0;
@@ -786,9 +810,11 @@ void permuteOrangeCross( int cube [6][3][3], int * edges [3][4][2] )
     {
         calcMove( cube, 'D', 0 );
     }
+
+    return 0;
 }
 
-void solveOrangeCorners( int cube [6][3][3], int * corners [2][4][3] )
+int solveOrangeCorners( int cube [6][3][3], int * corners [2][4][3] )
 {
     int count = 0;
     int opSide = 0;
@@ -845,9 +871,11 @@ void solveOrangeCorners( int cube [6][3][3], int * corners [2][4][3] )
             calcMove( cube, 'r', opSide );
         }
     }
+
+    return 0;
 }
 
-void permuteOrangeCorners( int cube [6][3][3], int * corners [2][4][3] )
+int permuteOrangeCorners( int cube [6][3][3], int * corners [2][4][3] )
 {
     int count = 0;
     int opSide = 0;
@@ -918,6 +946,7 @@ void permuteOrangeCorners( int cube [6][3][3], int * corners [2][4][3] )
         calcMove( cube, 'D', 0 );
     }
 
+    return 0;
 }
 
 int orangeCornersDone( int cube [6][3][3], int * corners[2][4][3] )
