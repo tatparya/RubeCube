@@ -1,4 +1,5 @@
 int solveCube( int [6][3][3] );
+int checkSolved( int [6][3][3] );
 
 //  HELPER FUNCTIONS
 int solveWhiteCross( int [6][3][3], int * [3][4][2] );

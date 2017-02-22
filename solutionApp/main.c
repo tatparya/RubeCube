@@ -76,8 +76,13 @@ int main()
     };
 
     int input = -1;
+    int testCase = 0;
+    int failed = 0;
+
     while( input != 0 )
     {
+        testCase = 0;
+
         printf( "\nPlease enter chose a function:\n");
         printf( "0:\tExit\t");
         printf( "1:\tSolve Cube\t");
@@ -97,17 +102,14 @@ int main()
         printf( "15:\tBottom\t");
         printf( "16:\tBottom Prime\n");
         printf( "17:\tScramble Cube\n");
+        printf( "18:\tTest solution\n");
 
         scanf( "%d", &input );
 
         switch ( input ) {
             case 1:
-                if( solveCube( cube ) != 0 )
-                {
-                    printf( "SOLUTION FAILED\n" );
-                    return -1;
-                }
-                continue;
+                //  Test solve
+                solveCube( cube );
                 break;
             case 2:
                 break;
@@ -155,6 +157,30 @@ int main()
                 break;
             case 17:
                 scrambleCube( cube, 20 );
+                break;
+            case 18:
+                //  Test solution
+                scrambleCube( cube, 20 );
+                while( testCase < 100 && !failed )
+                {
+                    scrambleCube( cube, 20 );
+                    solveCube( cube );
+                    //  Check solved
+                    if( !checkSolved( cube ) )
+                    {
+                        failed = 1;
+                    }
+                    testCase++;
+                }
+
+                if( failed )
+                {
+                    printf( "Solution Algorithm Failed!\n" );
+                }
+                else
+                {
+                    printf( "Soluton Algorithm Solved 100 times successfully!\n" );
+                }
                 break;
             default:
                 printf( "Invalid Option, please chose a different option!\n\n" );
