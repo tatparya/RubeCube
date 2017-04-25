@@ -52,17 +52,17 @@ var corners =
 
 var setColor = function( obj, color ){
     switch( color ){
-        case 5: obj.style.backgroundColor = "#d50000"; // red;
+        case 3: obj.style.backgroundColor = "#d50000"; // red;
                 break;
-        case 2: obj.style.backgroundColor = "#2962ff"; // blue;
+        case 0: obj.style.backgroundColor = "#2962ff"; // blue;
                 break;
-        case 0: obj.style.backgroundColor = "#00c853"; // green;
+        case 2: obj.style.backgroundColor = "#00c853"; // green;
                 break;
-        case 1: obj.style.backgroundColor = "#fafafa"; // grey;
+        case 4: obj.style.backgroundColor = "#fafafa"; // grey;
                 break;
-        case 4: obj.style.backgroundColor = "#ff6d00"; // orange;
+        case 1: obj.style.backgroundColor = "#ff6d00"; // orange;
                 break;
-        case 3: obj.style.backgroundColor = "#ffd600"; // yellow;
+        case 5: obj.style.backgroundColor = "#ffd600"; // yellow;
                 break;
         default:
                 break;
